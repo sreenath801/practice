@@ -1,24 +1,31 @@
 version: 2.1
+
 orbs:
-  docker: circleci/docker@2.8.1  # Use the Docker Orb
+  docker: circleci/docker@1.7.0
 
 jobs:
   build_and_push:
-    executor: docker/docker  # Define the executor to use Docker environment
+    executor: docker/docker
     steps:
-      - checkout  # Check out source code
-      # Enable Docker layer caching
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+          docker_layer_caching: true
 
-      - docker/check:
-          docker-username: $DOCKERHUB_USERNAME  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
-          docker-password: $DOCKERHUB_ACCESS_TOKEN
-      - docker/build:  # Build Docker image
-          image: $DOCKERHUB_USERNAME/myapp
-          tag: 'latest'  # Multiple tags for the image
+      - run:
+          name: Log into Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
-      - docker/push:  # Push Docker image
-          image: $DOCKERHUB_USERNAME/myapp
-          tag: 'latest'
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1} .
+
+      - run:
+          name: Push Docker Image to Docker Hub
+          command: |
+            docker push $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1}
 
 workflows:
   version: 2
