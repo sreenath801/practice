@@ -7,9 +7,7 @@ jobs:
     executor: docker/docker  # Define the executor to use Docker environment
     steps:
       - checkout  # Check out source code
-      - setup_remote_docker:  # Set up remote Docker environment
-          version: 20.10.6  # Specify Docker version
-          docker_layer_caching: true  # Enable Docker layer caching
+      # Enable Docker layer caching
 
       - docker/check  # Check for existing Docker image
 
