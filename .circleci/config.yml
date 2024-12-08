@@ -9,11 +9,9 @@ jobs:
       - checkout  # Check out source code
       # Enable Docker layer caching
 
-      - docker/check  # Check for existing Docker image
-
-      - run:  # Login to Docker Hub
-          name: Log into Docker Hub
-          command: echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - docker/check:
+          docker-username: $DOCKERHUB_USERNAME  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: $DOCKERHUB_ACCESS_TOKEN
       - docker/build:  # Build Docker image
           image: $DOCKERHUB_USERNAME/myapp
           tag: 'latest'  # Multiple tags for the image
