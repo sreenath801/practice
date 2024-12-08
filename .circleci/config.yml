@@ -13,7 +13,7 @@ jobs:
 
       - run:  # Login to Docker Hub
           name: Log into Docker Hub
-          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+          command: echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - docker/build:  # Build Docker image
           image: $DOCKERHUB_USERNAME/myapp
           tag: 'latest'  # Multiple tags for the image
