@@ -3,7 +3,7 @@ serviceAccount:
   create: true
   name: custom-service-account-name
 image:
-  repository: ksreenath801/practice
+  repository: ksreenath801/myapp
   tag: latest
   pullPolicy: IfNotPresent
 
