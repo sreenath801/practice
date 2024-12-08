@@ -1,0 +1,31 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.7.0  # Use the Docker Orb
+
+jobs:
+  build_and_push:
+    executor: docker/docker  # Define the executor to use Docker environment
+    steps:
+      - checkout  # Check out source code
+      - setup_remote_docker:  # Set up remote Docker environment
+          version: 20.10.6  # Specify Docker version
+          docker_layer_caching: true  # Enable Docker layer caching
+
+      - docker/check  # Check for existing Docker image
+
+      - run:  # Login to Docker Hub
+          name: Log into Docker Hub
+          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+      - docker/build:  # Build Docker image
+          image: $DOCKERHUB_USERNAME/myapp
+          tag: 'latest'  # Multiple tags for the image
+
+      - docker/push:  # Push Docker image
+          image: $DOCKERHUB_USERNAME/myapp
+          tag: 'latest'
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build_and_push
