@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  docker: circleci/docker@1.7.0  # Use the Docker Orb
+  docker: circleci/docker@2.8.1  # Use the Docker Orb
 
 jobs:
   build_and_push:
