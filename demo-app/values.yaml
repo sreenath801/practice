@@ -28,7 +28,7 @@ resources:
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
+  targetPort: 9090
 
 # Ingress configuration
 ingress:
