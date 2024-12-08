@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/sreenath801/practice
-    path: demo-app
+    path: practice 
     targetRevision: main
     helm:
       valueFiles:
