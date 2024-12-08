@@ -7,11 +7,14 @@ spec:
   project: default
   source:
     repoURL: https://github.com/sreenath801/practice
-    path: practice
+    path: demo-app
     targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd 
+    namespace: demo-app
   syncPolicy:
     automated:
       prune: true
