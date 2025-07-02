@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/sreenath801/practice
+    repoURL: https://github.com/sreenath801/Python-argocd-deployment
     path: practice 
     targetRevision: main
     helm:
       valueFiles:
-        - values.yaml
+        - values.dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
